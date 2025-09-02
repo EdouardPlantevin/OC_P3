@@ -2,15 +2,11 @@ package com.chattop.oc_p3.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
-public record UserRegister(
+public record UserLogin(
         @NotBlank(message = "email is mandatory")
         @Email(message = "email is invalid")
-        String email,
-
-        @NotBlank(message = "name is mandatory")
-        String name,
+        String login, //email
 
         @NotBlank(message = "password is mandatory")
         String password

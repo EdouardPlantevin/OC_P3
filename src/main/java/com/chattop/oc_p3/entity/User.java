@@ -6,16 +6,19 @@ import lombok.Data;
 import java.util.Date;
 
 @Entity
-@Table(name = "oc_user")
+@Table(
+        name = "oc_user",
+        uniqueConstraints = @UniqueConstraint(columnNames = "email")
+)
 @Data
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", unique = true)
     private Long id;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "name", nullable = false)
