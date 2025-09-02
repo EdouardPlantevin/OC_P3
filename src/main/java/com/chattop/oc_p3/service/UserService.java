@@ -5,16 +5,14 @@ import com.chattop.oc_p3.model.UserDto;
 import com.chattop.oc_p3.model.UserRegister;
 import com.chattop.oc_p3.repository.UserRepository;
 import com.chattop.oc_p3.service.exception.EmailAlreadyExist;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public UserDto findUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow();

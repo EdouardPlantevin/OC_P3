@@ -1,25 +1,19 @@
 package com.chattop.oc_p3.controller;
 
-import com.chattop.oc_p3.entity.User;
 import com.chattop.oc_p3.model.UserDto;
 import com.chattop.oc_p3.model.UserLogin;
 import com.chattop.oc_p3.model.UserRegister;
 import com.chattop.oc_p3.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AccountController {
 
     private final UserService userService;
-
-    public AccountController(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping("/register")
     public String register(@RequestBody @Valid UserRegister userRegister) {
