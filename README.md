@@ -7,3 +7,12 @@
 ```
 curl http://localhost:8080/actuator/health/db
 ````
+
+### Environnement
+
+Dans src/main/resources créer un fichier application-dev.properties et rajouter vos logs de bdd
+
+```
+spring.datasource.username=#YOUR_USERNAME#
+spring.datasource.password=#YOUR_PASSWORD#
+```

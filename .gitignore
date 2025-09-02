@@ -32,5 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
-###Image###
+### PICTURE ###
 uploads
+
+### ENV ###
+/src/main/resources/application-dev.properties
