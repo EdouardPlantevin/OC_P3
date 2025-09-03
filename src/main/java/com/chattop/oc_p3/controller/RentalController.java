@@ -1,9 +1,6 @@
 package com.chattop.oc_p3.controller;
 
-import com.chattop.oc_p3.model.ApiResponse;
-import com.chattop.oc_p3.model.RentalDto;
-import com.chattop.oc_p3.model.RentalToCreate;
-import com.chattop.oc_p3.model.RentalToEdit;
+import com.chattop.oc_p3.model.*;
 import com.chattop.oc_p3.service.RentalService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +18,9 @@ public class RentalController {
 
 
     @GetMapping()
-    public List<RentalDto> getAllRentals() {
-        return rentalService.getAllRentals();
+    public RentalsResponse getAllRentals() {
+        List<RentalDto> rentals = rentalService.getAllRentals();
+        return new RentalsResponse(rentals);
     }
 
     @GetMapping("/{id}")
