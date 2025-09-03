@@ -1,6 +1,6 @@
 package com.chattop.oc_p3.controller;
 
-import com.chattop.oc_p3.model.MessageResponse;
+import com.chattop.oc_p3.model.ApiResponse;
 import com.chattop.oc_p3.model.RentalDto;
 import com.chattop.oc_p3.model.RentalToCreate;
 import com.chattop.oc_p3.model.RentalToEdit;
@@ -31,15 +31,15 @@ public class RentalController {
     }
 
     @PostMapping(consumes = "multipart/form-data")
-    public ResponseEntity<MessageResponse> createRental(@Valid @ModelAttribute RentalToCreate rentalToCreate) {
+    public ResponseEntity<ApiResponse> createRental(@Valid @ModelAttribute RentalToCreate rentalToCreate) {
         rentalService.create(rentalToCreate);
-        return ResponseEntity.ok(new MessageResponse("Rental created"));
+        return ResponseEntity.ok(new ApiResponse("Rental created"));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<MessageResponse> updateRental(@PathVariable Long id, @Valid @ModelAttribute RentalToEdit rentalToEdit) {
+    public ResponseEntity<ApiResponse> updateRental(@PathVariable Long id, @Valid @ModelAttribute RentalToEdit rentalToEdit) {
         rentalService.update(id, rentalToEdit);
-        return ResponseEntity.ok(new MessageResponse("Rental updated"));
+        return ResponseEntity.ok(new ApiResponse("Rental updated"));
     }
 
 
