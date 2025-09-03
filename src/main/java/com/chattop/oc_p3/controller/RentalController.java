@@ -2,6 +2,7 @@ package com.chattop.oc_p3.controller;
 
 import com.chattop.oc_p3.model.*;
 import com.chattop.oc_p3.service.RentalService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Rental")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/rentals")
