@@ -1,8 +1,8 @@
 package com.chattop.oc_p3.service;
 
+import com.chattop.oc_p3.entity.AppUser;
 import com.chattop.oc_p3.entity.Message;
 import com.chattop.oc_p3.entity.Rental;
-import com.chattop.oc_p3.entity.User;
 import com.chattop.oc_p3.model.MessageDto;
 import com.chattop.oc_p3.repository.MessageRepository;
 import com.chattop.oc_p3.repository.RentalRepository;
@@ -27,14 +27,14 @@ public class MessageService {
                 .findById(messageDto.rentalId())
                 .orElseThrow(() -> new RentalNotFoundException(messageDto.rentalId()));
 
-        User user = userRepository
-                .findById(messageDto.userId())
-                .orElseThrow(() -> new UserNotFoundException(messageDto.userId()));
+        AppUser appUser = userRepository
+                .findById(messageDto.appUserId())
+                .orElseThrow(() -> new UserNotFoundException(messageDto.appUserId()));
 
         Message message = new Message();
         message.setMessage(messageDto.message());
         message.setRental(rental);
-        message.setUser(user);
+        message.setAppUser(appUser);
 
         try {
             messageRepository.save(message);

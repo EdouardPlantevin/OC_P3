@@ -9,8 +9,8 @@ public record MessageDto(
         String message,
 
         @NotNull
-        @JsonProperty("user_id")
-        Long userId,
+        @JsonProperty("app_user_id")
+        Long appUserId,
 
         @NotNull
         @JsonProperty("rental_id")

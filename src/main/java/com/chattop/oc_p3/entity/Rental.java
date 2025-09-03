@@ -32,7 +32,7 @@ public class Rental {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
+    private AppUser owner;
 
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
