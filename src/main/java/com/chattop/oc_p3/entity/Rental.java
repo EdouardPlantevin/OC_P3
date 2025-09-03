@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -38,5 +39,8 @@ public class Rental {
 
     @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
+
+    @OneToMany(mappedBy = "rental")
+    private List<Message> messages;
 
 }
