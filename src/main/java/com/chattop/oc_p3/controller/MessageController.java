@@ -2,7 +2,6 @@ package com.chattop.oc_p3.controller;
 
 import com.chattop.oc_p3.model.ApiResponse;
 import com.chattop.oc_p3.model.MessageDto;
-import com.chattop.oc_p3.model.UserDto;
 import com.chattop.oc_p3.service.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

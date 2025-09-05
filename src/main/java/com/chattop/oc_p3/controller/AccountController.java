@@ -3,7 +3,6 @@ package com.chattop.oc_p3.controller;
 import com.chattop.oc_p3.model.*;
 import com.chattop.oc_p3.security.JwtService;
 import com.chattop.oc_p3.service.UserService;
-import com.chattop.oc_p3.service.exception.UserNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,7 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
@@ -44,17 +42,9 @@ public class AccountController {
         userService.saveUser(userRegister);
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userRegister.email(), userRegister.password());
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        securityContext.setAuthentication(authentication);
-        securityContextRepository.saveContext(securityContext, request, response);
-
-        String jwt = jwtService.createToken(authentication);
-
-        return ResponseEntity.ok(new TokenResponse(jwt));
+        return getTokenResponseEntity(request, response, authenticationToken);
     }
 
-    //TODO: add login in feature/jwt
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> login(
             @RequestBody @Valid UserLogin userLogin,
@@ -62,14 +52,7 @@ public class AccountController {
             HttpServletResponse response
     ) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userLogin.login(), userLogin.password());
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        securityContext.setAuthentication(authentication);
-        securityContextRepository.saveContext(securityContext, request, response);
-
-        String jwt = jwtService.createToken(authentication);
-
-        return ResponseEntity.ok(new TokenResponse(jwt));
+        return getTokenResponseEntity(request, response, authenticationToken);
     }
 
 
@@ -78,6 +61,21 @@ public class AccountController {
     public UserDto getUser(@AuthenticationPrincipal Jwt jwt) {
         String email = jwt.getSubject();
         return userService.findUserByEmail(email);
+    }
+
+    private ResponseEntity<TokenResponse> getTokenResponseEntity(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            UsernamePasswordAuthenticationToken authenticationToken
+    ) {
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(authentication);
+        securityContextRepository.saveContext(securityContext, request, response);
+
+        String jwt = jwtService.createToken(authentication);
+
+        return ResponseEntity.ok(new TokenResponse(jwt));
     }
 
 }
