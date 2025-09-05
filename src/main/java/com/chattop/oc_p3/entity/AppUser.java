@@ -12,7 +12,7 @@ import java.util.List;
         uniqueConstraints = @UniqueConstraint(columnNames = "email")
 )
 @Data
-public class User {
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private List<Rental> rentals;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "appUser")
     private List<Message> messages;
 
 }
