@@ -3,8 +3,6 @@ package com.chattop.oc_p3.model;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-
 public record RentalToCreate(
         @NotBlank()
         @Size(max = 255)
