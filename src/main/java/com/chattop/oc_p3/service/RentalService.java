@@ -1,5 +1,6 @@
 package com.chattop.oc_p3.service;
 
+import com.chattop.oc_p3.entity.AppUser;
 import com.chattop.oc_p3.entity.Rental;
 import com.chattop.oc_p3.model.RentalDto;
 import com.chattop.oc_p3.model.RentalToCreate;
@@ -7,8 +8,12 @@ import com.chattop.oc_p3.model.RentalToEdit;
 import com.chattop.oc_p3.repository.RentalRepository;
 import com.chattop.oc_p3.repository.UserRepository;
 import com.chattop.oc_p3.service.exception.RentalNotFoundException;
+import com.chattop.oc_p3.service.exception.UserNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -43,7 +49,14 @@ public class RentalService {
         );
     }
 
-    public void create(@Valid RentalToCreate rentalToCreate) {
+    public void create(@Valid RentalToCreate rentalToCreate, Jwt jwt) {
+
+        Optional<AppUser> user = userRepository.findByEmail(jwt.getSubject());
+
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
         String pictureName;
         try {
             pictureName = uploadFile(rentalToCreate.picture());
@@ -59,7 +72,7 @@ public class RentalService {
         rental.setDescription(rentalToCreate.description());
         rental.setCreatedAt(new java.util.Date());
         rental.setUpdatedAt(new java.util.Date());
-        rental.setOwner(userRepository.findById(1L).orElseThrow());
+        rental.setOwner(userRepository.findById(user.get().getId()).orElseThrow());
         rentalRepository.save(rental);
     }
 
