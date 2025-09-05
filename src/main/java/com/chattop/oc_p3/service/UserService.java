@@ -5,8 +5,9 @@ import com.chattop.oc_p3.model.UserDto;
 import com.chattop.oc_p3.model.UserRegister;
 import com.chattop.oc_p3.repository.UserRepository;
 import com.chattop.oc_p3.service.exception.EmailAlreadyExist;
+import com.chattop.oc_p3.service.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,23 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public UserDto findUserById(Long id) {
-        AppUser appUser = userRepository.findById(id).orElseThrow();
+        AppUser appUser = userRepository
+                .findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        return new UserDto(
+                appUser.getId(),
+                appUser.getName(),
+                appUser.getEmail(),
+                appUser.getCreatedAt(),
+                appUser.getUpdatedAt()
+        );
+    }
+
+    public UserDto findUserByEmail(String email) {
+        AppUser appUser = userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return new UserDto(
                 appUser.getId(),

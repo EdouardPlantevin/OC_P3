@@ -8,10 +8,13 @@ import com.chattop.oc_p3.repository.MessageRepository;
 import com.chattop.oc_p3.repository.RentalRepository;
 import com.chattop.oc_p3.repository.UserRepository;
 import com.chattop.oc_p3.service.exception.RentalNotFoundException;
-import com.chattop.oc_p3.service.exception.UserNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,20 +24,23 @@ public class MessageService {
     private final RentalRepository rentalRepository;
     private final UserRepository userRepository;
 
-    public void create(@Valid MessageDto messageDto) {
+    public void create(@Valid MessageDto messageDto, Jwt jwt) {
 
         Rental rental = rentalRepository
                 .findById(messageDto.rentalId())
                 .orElseThrow(() -> new RentalNotFoundException(messageDto.rentalId()));
 
-        AppUser appUser = userRepository
-                .findById(messageDto.appUserId())
-                .orElseThrow(() -> new UserNotFoundException(messageDto.appUserId()));
+        String email = jwt.getSubject();
+
+        Optional<AppUser> appUser = userRepository.findByEmail(email);
+        if (appUser.isEmpty()) {
+            throw new UsernameNotFoundException("User not found");
+        }
 
         Message message = new Message();
         message.setMessage(messageDto.message());
         message.setRental(rental);
-        message.setAppUser(appUser);
+        message.setAppUser(appUser.get());
 
         try {
             messageRepository.save(message);
