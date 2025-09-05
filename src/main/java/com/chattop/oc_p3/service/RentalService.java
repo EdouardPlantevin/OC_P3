@@ -44,9 +44,9 @@ public class RentalService {
     }
 
     public void create(@Valid RentalToCreate rentalToCreate) {
-
+        String pictureName;
         try {
-            uploadFile(rentalToCreate.picture());
+            pictureName = uploadFile(rentalToCreate.picture());
         } catch (Exception e) {
             throw new RuntimeException();
         }
@@ -55,7 +55,7 @@ public class RentalService {
         rental.setName(rentalToCreate.name());
         rental.setSurface(rentalToCreate.surface());
         rental.setPrice(rentalToCreate.price());
-        rental.setPicture(rentalToCreate.picture().getOriginalFilename());
+        rental.setPicture(pictureName);
         rental.setDescription(rentalToCreate.description());
         rental.setCreatedAt(new java.util.Date());
         rental.setUpdatedAt(new java.util.Date());
@@ -63,7 +63,7 @@ public class RentalService {
         rentalRepository.save(rental);
     }
 
-    private void uploadFile(MultipartFile file) {
+    private String uploadFile(MultipartFile file) {
         if (file.isEmpty()) {
             throw new RuntimeException("File is empty");
         }
@@ -89,6 +89,8 @@ public class RentalService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to save file", e);
         }
+
+        return safeFileName;
     }
 
 
