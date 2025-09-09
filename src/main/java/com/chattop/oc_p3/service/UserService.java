@@ -4,7 +4,7 @@ import com.chattop.oc_p3.entity.AppUser;
 import com.chattop.oc_p3.model.UserDto;
 import com.chattop.oc_p3.model.UserRegister;
 import com.chattop.oc_p3.repository.UserRepository;
-import com.chattop.oc_p3.service.exception.EmailAlreadyExist;
+import com.chattop.oc_p3.service.exception.EmailAlreadyExistException;
 import com.chattop.oc_p3.service.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -51,7 +51,7 @@ public class UserService {
     public void saveUser(UserRegister userRegister) {
 
         if (isEmailExists(userRegister.email())) {
-            throw new EmailAlreadyExist(userRegister.email());
+            throw new EmailAlreadyExistException(userRegister.email());
         }
 
         AppUser appUser = new AppUser();

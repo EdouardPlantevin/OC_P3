@@ -1,4 +1,4 @@
-package com.chattop.oc_p3.controller;
+package com.chattop.oc_p3.controller.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

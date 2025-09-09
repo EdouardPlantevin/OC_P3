@@ -1,4 +1,4 @@
-package com.chattop.oc_p3.controller;
+package com.chattop.oc_p3.controller.exception;
 
 import com.chattop.oc_p3.service.exception.RentalNotFoundException;
 import org.springframework.http.HttpStatus;
