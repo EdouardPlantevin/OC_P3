@@ -79,7 +79,6 @@ Si besoin, vous pouvez le forcer :
 
 ## 6️⃣ Vérifications
 
-* 🌐 Application : [http://localhost:3001](http://localhost:3001)
 * ❤️ Santé : [http://localhost:3001/actuator/health](http://localhost:3001/actuator/health)
 * 📖 Documentation Swagger UI : [http://localhost:3001/swagger-ui/index.html](http://localhost:3001/swagger-ui/index.html)
 
