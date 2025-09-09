@@ -1,6 +1,6 @@
-package com.chattop.oc_p3.controller;
+package com.chattop.oc_p3.controller.exception;
 
-import com.chattop.oc_p3.service.exception.EmailAlreadyExist;
+import com.chattop.oc_p3.service.exception.EmailAlreadyExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -11,9 +11,9 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class AccountControllerErrorHandler {
-    @ExceptionHandler(EmailAlreadyExist.class)
+    @ExceptionHandler(EmailAlreadyExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public Map<String, String> handleEmailAlreadyExist(EmailAlreadyExist ex) {
+    public Map<String, String> handleEmailAlreadyExist(EmailAlreadyExistException ex) {
         return Map.of("message", ex.getMessage());
     }
 }
