@@ -70,7 +70,6 @@ Si besoin, vous pouvez le forcer :
 
 ## 5️⃣ Lancer l’application
 
-### 🔹 Option 1 (recommandée en dev)
 
 ```bash
  mvn spring-boot:run
