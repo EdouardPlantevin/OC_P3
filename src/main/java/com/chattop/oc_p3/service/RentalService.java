@@ -26,21 +26,31 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class RentalService {
 
     private final RentalRepository rentalRepository;
     private final UserRepository userRepository;
+    private final RentalMapper rentalMapper;
+
+    public RentalService(
+            RentalRepository rentalRepository,
+            UserRepository userRepository,
+            RentalMapper rentalMapper
+    ) {
+        this.rentalRepository = rentalRepository;
+        this.userRepository = userRepository;
+        this.rentalMapper = rentalMapper;
+    }
 
     public List<RentalDto> getAllRentals() {
         return rentalRepository.findAll()
                 .stream()
-                .map(RentalMapper::toDto)
+                .map(rentalMapper::toDto)
                 .toList();
     }
 
     public RentalDto getRentalById(Long id) {
-        return RentalMapper.toDto(
+        return rentalMapper.toDto(
                 rentalRepository
                         .findById(id)
                         .orElseThrow(() -> new RentalNotFoundException(id))

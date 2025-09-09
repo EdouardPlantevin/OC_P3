@@ -2,12 +2,19 @@ package com.chattop.oc_p3.service;
 
 import com.chattop.oc_p3.entity.Rental;
 import com.chattop.oc_p3.model.RentalDto;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RentalMapper {
-    public static RentalDto toDto(Rental rental) {
+
+    @Value("${app.path-image-url}")
+    private String pathImageUrl;
+
+    public RentalDto toDto(Rental rental) {
 
         String pictureUrl = rental.getPicture() != null
-                ? "http://localhost:3001/images/" + rental.getPicture()
+                ? pathImageUrl + rental.getPicture()
                 : null;
 
         return new RentalDto(

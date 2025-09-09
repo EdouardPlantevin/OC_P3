@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -29,6 +30,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.naming.AuthenticationException;
 import java.util.List;
 
 @Configuration
@@ -69,7 +71,7 @@ public class SecurityConfiguration {
             try {
                 return jwtDecoder.decode(token);
             } catch (Exception e) {
-                throw new RuntimeException("Invalid JWT token", e);
+                throw new BadCredentialsException("Invalid JWT token", e);
             }
         };
     }
