@@ -84,6 +84,20 @@ Si besoin, vous pouvez le forcer :
 
 ---
 
+Voici une version plus claire et mise en forme de ton markdown :
+
+
+## (Optionnel)
+
+Une fois l'application lancer pour la première fois et le shema de la BDD créé,
+un script SQL est disponible dans **`sql/script.sql`**.  
+Il contient :
+- **3 annonces**  
+- **1 utilisateur** avec les identifiants suivants :
+
+email: test@test.com  
+password: password
+
 ## 7️⃣ Dépannage
 
 * ❌ **Access denied for user**
