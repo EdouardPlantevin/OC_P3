@@ -9,7 +9,6 @@ import com.chattop.oc_p3.repository.RentalRepository;
 import com.chattop.oc_p3.repository.UserRepository;
 import com.chattop.oc_p3.service.exception.RentalNotFoundException;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;

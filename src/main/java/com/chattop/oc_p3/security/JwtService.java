@@ -2,6 +2,7 @@ package com.chattop.oc_p3.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -24,6 +25,8 @@ public class JwtService {
         this.jwtEncoder = jwtEncoder;
     }
 
+    public static final MacAlgorithm JWT_ALGORITHM = MacAlgorithm.HS512;
+
     public String createToken(Authentication authentication) {
         Instant now = Instant.now();
 
@@ -33,7 +36,7 @@ public class JwtService {
                 .expiresAt(now.plus(tokenValidityInSeconds, ChronoUnit.SECONDS))
                 .build();
 
-        JwsHeader jwsHeader = JwsHeader.with(SecurityUtils.JWT_ALGORITHM).build();
+        JwsHeader jwsHeader = JwsHeader.with(JWT_ALGORITHM).build();
         return jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
     }
 }
