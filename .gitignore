@@ -33,7 +33,7 @@ build/
 .vscode/
 
 ### PICTURE ###
-uploads
+#uploads
 
 ### ENV ###
 /src/main/resources/application-dev.properties
